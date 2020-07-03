@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/03 10:02:52 by jhache            #+#    #+#              #
-#    Updated: 2020/07/03 10:42:12 by jhache           ###   ########.fr        #
+#    Updated: 2020/07/03 14:47:56 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ MKDIR := mkdir -p
 
 # Files
 SRC_NAME := main.c
+SRC_NAME += utils/dynamic_array.c
 
 SRC :=	$(addprefix $(SRC_PATH)/, $(SRC_NAME))
 OBJ :=	$(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
