@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 20:20:10 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/10 03:05:07 by jhache           ###   ########.fr       */
+/*   Updated: 2020/07/14 16:17:47 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 
 static bool		my_reallocf(void **data, size_t size)
 {
-	void		*new_buf;
+	void		*new_data;
 
-	new_buf = realloc(*data, size);
-	if (new_buf == NULL)
+	new_data = realloc(*data, size);
+	if (new_data == NULL)
 	{
 		free(*data);
 		return (false);
 	}
-	*data = new_buf;
+	*data = new_data;
 	return (true);
 }
 
@@ -34,42 +34,43 @@ t_gl_data		open_file(char *filename)
 {
 	t_gl_data	data;
 
-	data.fd = fopen(filename, "r");
-	data.line = NULL;
 	data._buf[0] = '\0';
+	data._buf[GL_BUF_SIZE] = '\0';
+	data._fd = fopen(filename, "r");
+	data.line = calloc(1, 1);
 	return (data);
 }
 
 void			close_file(t_gl_data *data)
 {
-	fclose(data->fd);
+	fclose(data->_fd);
 }
 
-size_t			get_line(t_gl_data *data)
+bool			get_line(t_gl_data *d)
 {
 	char		*tmp;
 	size_t		wcount;
 	size_t		rcount;
 
 	rcount = 0;
+	d->line[0] = '\0';
 	while (true)
 	{
-		tmp = strchr(data->_buf, '\n');
-		wcount = (tmp != NULL ? tmp - data->_buf : strlen(data->_buf));
+		tmp = strchr(d->_buf, '\n');
+		wcount = (tmp ? (size_t)(tmp - d->_buf) : strlen(d->_buf));
 		rcount += wcount;
-		if (!my_reallocf(&data->line, rcount + 1))
-			return (-1);
-		strncat(data->line, data->_buf, wcount);
-		data->line[rcount] = '\0';
+		if (!my_reallocf((void **)&d->line, rcount + 1))
+			return (false);
+		strncat(d->line, d->_buf, wcount);
+		d->line[rcount] = '\0';
 		if (tmp != NULL)
 		{
-			memmove(data->_buf, data->_buf + wcount + 1,
-					GETLINE_BUFFER_SIZE - wcount);
+			memmove(d->_buf, d->_buf + wcount + 1, GL_BUF_SIZE - wcount + 1);
 			break ;
 		}
-		wcount = fread(data->_buf, 1, GETLINE_BUFFER_SIZE, data->fd);
-		if (wcount != GETLINE_BUFFER_SIZE)//EOF or error, we add a \n to end the loop at the next lap
-			data->_buf[wcount] = '\n';
+		wcount = fread(d->_buf, 1, GL_BUF_SIZE, d->_fd);
+		if (wcount != GL_BUF_SIZE)
+			memcpy(d->_buf + wcount, "\n\0", 2);
 	}
-	return (rcount);
+	return (rcount > 0 || strlen(d->_buf) > 0 || !feof(d->_fd));
 }
