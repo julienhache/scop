@@ -4,3 +4,6 @@
 
 #binary
 scop
+
+# code editor folder
+.vscode/
