@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 21:26:49 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/14 16:18:31 by jhache           ###   ########.fr       */
+/*   Updated: 2020/07/26 21:22:58 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(int ac, char **av)
 
 	if (ac < 2)
 		return -1;
-	test = open_file(av[1]);
+	test = gl_open_file(av[1]);
 	while ((ret = get_line(&test)) > 0)
 	{
 		printf("%s\n", test.line);
