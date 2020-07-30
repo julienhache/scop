@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/03 10:02:52 by jhache            #+#    #+#              #
-#    Updated: 2020/07/26 21:44:16 by jhache           ###   ########.fr        #
+#    Updated: 2020/07/30 11:24:48 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ MKDIR := mkdir -p
 SRC_NAME := main.c
 SRC_NAME += utils/dynamic_array/dynamic_array.c
 SRC_NAME += utils/get_line/get_line.c
-SRC_NAME += obj_parser/obj_parser.c
+SRC_NAME += obj_parser/obj_parser.c \
+			obj_parser/parsing_method1.c
 
 SRC :=	$(addprefix $(SRC_PATH)/, $(SRC_NAME))
 OBJ :=	$(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))

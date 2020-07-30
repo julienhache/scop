@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:08:19 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/30 09:58:39 by jhache           ###   ########.fr       */
+/*   Updated: 2020/07/30 12:20:26 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct		s_obj_file
 }					t_obj_file;
 
 /*
-** NUMBER_OF_DARRAY is used to loop on all darray of a t_obj_file instance.
+** NUMBER_OF_DARRAY is used to loop on all darrays of a t_obj_file instance.
 ** This way, you can easily reach any (or each) data.
 ** A common way to achieve this is:
 ** 	{
@@ -44,7 +44,7 @@ typedef struct		s_obj_file
 ** 		while (darray_index++ < NUMBER_OF_DARRAY) {[...]}
 ** 	}
 */
-# define NUMBER_OF_DARRAY	4
+# define NUMBER_OF_DARRAY	OBJ_DATA_TYPE_NB
 
 t_obj_file		*parse_file(char *filename);
 void			destroy_obj_file(t_obj_file *data);
