@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 20:20:10 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/26 22:42:31 by jhache           ###   ########.fr       */
+/*   Updated: 2020/07/30 10:24:08 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool		my_reallocf(void **data, size_t size)
 	return (true);
 }
 
-t_gl_data		gl_open_file(char *filename)
+t_gl_data		gl_open_file(const char *filename)
 {
 	t_gl_data	data;
 

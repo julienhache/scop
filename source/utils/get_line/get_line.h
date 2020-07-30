@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 20:20:05 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/26 21:23:12 by jhache           ###   ########.fr       */
+/*   Updated: 2020/07/30 11:25:02 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct	s_gl_data
 **   meaning either an error occured, or EOF is reached.
 ** - Close the file with gl_close_file().
 */
-t_gl_data		gl_open_file(char *filename);
+t_gl_data		gl_open_file(const char *filename);
 bool			get_line(t_gl_data *data);
 void			gl_close_file(t_gl_data *data);
 

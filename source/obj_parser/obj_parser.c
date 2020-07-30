@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:09:29 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/30 12:04:28 by jhache           ###   ########.fr       */
+/*   Updated: 2020/07/30 12:04:45 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void					destroy_obj_file(t_obj_file *data)
 /*
 ** NB: data must be allocated before calling init_data().
 */
-static bool				init_data(t_obj_file *data, char *filename)
+static bool				init_data(t_obj_file *data, const char *filename)
 {
 	size_t				i;
 	t_darray * const	first_array = &data->v;
@@ -68,19 +68,19 @@ static bool				init_data(t_obj_file *data, char *filename)
 	return (true);
 }
 
-t_obj_data_type			lex_line(char *line)
+t_obj_data_type			lex_line(const char *line)
 {
 	(void)line;
 	return (OBJ_NONE);
 }
 
 static bool			parse_line_data(
-	t_darray *data_array, t_obj_data_type type, char *line)
+	t_darray *data_array, t_obj_data_type type, const char *line)
 {
 	return g_parsing_array[type](data_array, line);
 }
 
-t_obj_file				*parse_file(char *filename)
+t_obj_file				*parse_file(const char *filename)
 {
 	t_obj_file	*data;
 

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:08:19 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/30 12:20:26 by jhache           ###   ########.fr       */
+/*   Updated: 2020/07/30 12:20:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 */
 typedef struct		s_obj_file
 {
-	char		*filename;
+	const char	*filename;
 	t_gl_data	filedata;
 	t_darray	v;
 	t_darray	vt;
@@ -46,7 +46,7 @@ typedef struct		s_obj_file
 */
 # define NUMBER_OF_DARRAY	OBJ_DATA_TYPE_NB
 
-t_obj_file		*parse_file(char *filename);
+t_obj_file		*parse_file(const char *filename);
 void			destroy_obj_file(t_obj_file *data);
 
 #endif
