@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 20:20:10 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/26 21:23:10 by jhache           ###   ########.fr       */
+/*   Updated: 2020/07/26 22:42:31 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ t_gl_data		gl_open_file(char *filename)
 
 void			gl_close_file(t_gl_data *data)
 {
-	fclose(data->_fd);
+	if (data->_fd != NULL)
+		fclose(data->_fd);
 }
 
 bool			get_line(t_gl_data *d)
