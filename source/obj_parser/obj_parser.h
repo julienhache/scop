@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:08:19 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/30 12:20:41 by jhache           ###   ########.fr       */
+/*   Updated: 2021/01/27 11:14:35 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ typedef struct		s_obj_file
 ** This way, you can easily reach any (or each) data.
 ** A common way to achieve this is:
 ** 	{
-** 		t_darray * const	first_darray = &data->v;// the first element
+** 		t_darray * const	darray = &data->v;// the first element
+**      size_t				darr_i = 0;
 ** 		[...]
-** 		while (darray_index++ < NUMBER_OF_DARRAY) {[...]}
+** 		while (darr_i++ < NUMBER_OF_DARRAY) {[use darray[darr_i] element...]}
 ** 	}
 */
 # define NUMBER_OF_DARRAY	OBJ_DATA_TYPE_NB

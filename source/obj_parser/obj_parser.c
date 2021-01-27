@@ -6,37 +6,30 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:09:29 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/30 12:04:45 by jhache           ###   ########.fr       */
+/*   Updated: 2021/01/27 12:30:55 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "obj_parser.h"
-#include "parsing_methods.h"
+#include "parsing/parsing.h"
+#include "lexing/lexing.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 
-const obj_parsing_func	g_parsing_array[OBJ_DATA_TYPE_FLAGS_NB] = {
-	dummy_parsing,
-	dummy_parsing,
-	dummy_parsing,
-	dummy_parsing,
-	dummy_parsing,
-	error_parsing
-};
-
 void					destroy_obj_file(t_obj_file *data)
 {
-	size_t				i;
-	t_darray * const	first_array = &data->v;
+	size_t		i;
+	t_darray	*arrays;
 
 	if (data == NULL)
 		return ;
 	gl_close_file(&data->filedata);
+	arrays = &data->v;
 	i = 0;
 	while (i < NUMBER_OF_DARRAY)
 	{
-		del_darray(first_array + i++);
+		del_darray(arrays + i++);
 	}
 }
 
@@ -68,18 +61,6 @@ static bool				init_data(t_obj_file *data, const char *filename)
 	return (true);
 }
 
-t_obj_data_type			lex_line(const char *line)
-{
-	(void)line;
-	return (OBJ_NONE);
-}
-
-static bool			parse_line_data(
-	t_darray *data_array, t_obj_data_type type, const char *line)
-{
-	return g_parsing_array[type](data_array, line);
-}
-
 t_obj_file				*parse_file(const char *filename)
 {
 	t_obj_file	*data;
@@ -92,12 +73,12 @@ t_obj_file				*parse_file(const char *filename)
 	}
 	while (get_line(&data->filedata))
 	{
-		printf("parsing \"%s\"\n", data->filedata.line);
+		printf("parsing\t\"%s\"\n", data->filedata.line);
 		t_obj_data_type data_type = lex_line(data->filedata.line);
 		//printf("data_type: %d\n", data_type);
-		if (!parse_line_data(&data->v, data_type, data->filedata.line))
+		if (!parse_line(&data->v, data_type, data->filedata.line))
 		{
-			//printf("Error while parsing. exiting the parser...\n");
+			printf("Error while parsing. exiting the parser...\n");
 			destroy_obj_file(data);
 			free(data);
 			return (NULL);

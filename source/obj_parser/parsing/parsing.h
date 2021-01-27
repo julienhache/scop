@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_methods.h                                  :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 11:00:34 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/30 11:38:11 by jhache           ###   ########.fr       */
+/*   Updated: 2021/01/27 12:37:29 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJ_PARSER_PARSING_METHODS_H
-# define OBJ_PARSER_PARSING_METHODS_H
+#ifndef OBJ_PARSER_PARSING_PARSING_H
+# define OBJ_PARSER_PARSING_PARSING_H
 
-# include "obj_parser.h"
+# include "../obj_parser.h"
 
 /*
 ** The following function pointer store a parsing methods.
-** It will be used in a function pointers array, which indices
+** It will be used in a function pointers array, whose indices
 ** are represented by t_obj_data_type values.
 */
 typedef bool (*obj_parsing_func)(t_darray *, const char *);
 
 extern const obj_parsing_func	g_parsing_array[OBJ_DATA_TYPE_FLAGS_NB];
 
+bool		parse_line(
+	t_darray *data_array, t_obj_data_type type, const char *line);
 
 bool		dummy_parsing(t_darray *data_array, const char *line);
 bool		error_parsing(t_darray *data_array, const char *line);
