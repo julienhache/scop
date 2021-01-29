@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:47:34 by jhache            #+#    #+#             */
-/*   Updated: 2021/01/27 12:37:31 by jhache           ###   ########.fr       */
+/*   Updated: 2021/01/29 12:42:05 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ extern const obj_lexing_func	g_lexing_array[OBJ_DATA_TYPE_NB];
 
 t_obj_data_type		lex_line(const char *line);
 
-t_obj_data_type		dummy_lexing(const char *line);
+t_obj_data_type		lex_vertex(const char *line);
+t_obj_data_type		lex_vtexture(const char *line);
+t_obj_data_type		lex_vnormal(const char *line);
+t_obj_data_type		lex_face(const char *line);
 
 #endif
