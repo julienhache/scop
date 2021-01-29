@@ -6,16 +6,41 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:08:19 by jhache            #+#    #+#             */
-/*   Updated: 2021/01/27 11:14:35 by jhache           ###   ########.fr       */
+/*   Updated: 2021/01/29 22:15:44 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJ_PARSER_OBJ_PARSER_H
 # define OBJ_PARSER_OBJ_PARSER_H
 
-# include "data_types/data_types.h"
 # include "utils/dynamic_array/dynamic_array.h"
 # include "utils/get_line/get_line.h"
+
+/*
+** Vertex data
+**
+** The integral value of each identifier are used
+** as array index for the t_obj_file's darrays.
+*/
+typedef enum	e_obj_data_type
+{
+	/* geometric vertices */
+	OBJ_V = 0,
+	/* texture vertices */
+	OBJ_VT,
+	/* vertex normals */
+	OBJ_VN,
+	/* parameter space vertices (free-form curve/surface attributes) (unused) */
+/*	OBJ_VP, */
+	/* faces (as groups of vertices) */
+	OBJ_F,
+	/* Error handling */
+	OBJ_NONE,
+	OBJ_ERROR
+}				t_obj_data_type;
+
+# define OBJ_DATA_TYPE_NB		4
+# define OBJ_DATA_TYPE_FLAGS_NB	6
 
 /*
 ** t_obj_file is a struct that will contain all the data of a .obj file.
