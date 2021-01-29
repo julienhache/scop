@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:09:29 by jhache            #+#    #+#             */
-/*   Updated: 2021/01/27 12:30:55 by jhache           ###   ########.fr       */
+/*   Updated: 2021/01/29 23:18:00 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ t_obj_file				*parse_file(const char *filename)
 	{
 		printf("parsing\t\"%s\"\n", data->filedata.line);
 		t_obj_data_type data_type = lex_line(data->filedata.line);
-		//printf("data_type: %d\n", data_type);
 		if (!parse_line(&data->v, data_type, data->filedata.line))
 		{
 			printf("Error while parsing. exiting the parser...\n");
@@ -83,7 +82,6 @@ t_obj_file				*parse_file(const char *filename)
 			free(data);
 			return (NULL);
 		}
-		//printf("Parsed. going to next line...\n\n");
 	}
 	return (data);
 }
