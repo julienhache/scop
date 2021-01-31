@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/03 10:02:52 by jhache            #+#    #+#              #
-#    Updated: 2021/01/31 01:02:30 by jhache           ###   ########.fr        #
+#    Updated: 2021/01/31 01:36:19 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,17 @@ INC_PATH := $(SRC_PATH)# additionnal path, the other (implicit) one being the pa
 LIB_PATH := library
 
 # Libraries
-LIB_SDL2 := SDL2-2.0.14
-LIB := $(addprefix $(LIB_PATH)/, $(LIB_SDL2))
+LIBSDL_NAME := SDL2
+LIBSDL_PATH := $(LIB_PATH)/SDL2-2.0.14
+LIBSDL := $(LIBSDL_PATH)/lib/lib$(LIBSDL_NAME).a
+
+LIB := $(LIBSDL)
 
 # Compiler
 CC := gcc
-CCFLAGS := -Wall -Werror -Wextra -g3
-INCFLAGS := $(addprefix -iquote , $(INC_PATH)) $(addprefix -isystem, $(LIB)/include)
+CCFLAGS := -Wall -Werror -Wextra -g3 `$(LIBSDL_PATH)/sdl2-config --cflags`
+LDFLAGS := `$(LIBSDL_PATH)/sdl2-config --libs`
+INCFLAGS := $(addprefix -iquote , $(INC_PATH))
 
 
 # Commands
@@ -53,11 +57,14 @@ OBJ_DIRS := $(sort $(dir $(OBJ)))
 # Rules
 all: $(LIB) $(NAME)
 
-$(LIB): $(addsuffix .zip, $(LIB))
-	unzip $< -d $(LIB_PATH) > $(LIB_PATH)/unzip.log
+$(LIBSDL): $(LIBSDL_PATH).zip
+	unzip -f $< -d $(LIB_PATH) > $(LIB_PATH)/unzip.log
+	cd $(LIBSDL_PATH) && ./configure --prefix $(CURDIR)/$(LIBSDL_PATH)
+	make -C $(LIBSDL_PATH)
+	make -C $(LIBSDL_PATH) install
 
 $(NAME): $(OBJ_DIRS) $(OBJ)
-	$(CC) -o $@ $(OBJ)
+	$(CC) -o $@ $(LDFLAGS) $(OBJ)
 
 $(OBJ_DIRS):
 	$(MKDIR) $(OBJ_PATH) $@
@@ -75,12 +82,13 @@ clean:
 	$(RM) $(OBJ)
 	$(RMDIR) $(OBJ_DIRS)
 	$(RM) $(DEP_FILES)
+	@make -C $(LIBFT_PATH) clean > /dev/null ||:
 
 fclean: clean
 	$(RM) $(NAME)
+	@make -C $(LIBFT_PATH) fclean > /dev/null ||:
 
 lclean: fclean
-	$(RMDIR) $(addsuffix /**/*, $(LIB))
 	$(RMDIR) $(LIB)
 
 re: fclean all
