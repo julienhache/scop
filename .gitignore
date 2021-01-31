@@ -7,3 +7,10 @@ scop
 
 # code editor folder
 .vscode/
+
+# library folder
+library/*
+!library/*.zip
+
+# examples
+test/examples/**

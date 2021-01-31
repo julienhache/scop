@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/03 10:02:52 by jhache            #+#    #+#              #
-#    Updated: 2021/01/29 23:10:52 by jhache           ###   ########.fr        #
+#    Updated: 2021/01/31 01:02:30 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,16 @@ NAME := scop
 SRC_PATH := source
 OBJ_PATH := .bin
 INC_PATH := $(SRC_PATH)# additionnal path, the other (implicit) one being the path of the currently compiled source file
+LIB_PATH := library
 
+# Libraries
+LIB_SDL2 := SDL2-2.0.14
+LIB := $(addprefix $(LIB_PATH)/, $(LIB_SDL2))
 
 # Compiler
 CC := gcc
 CCFLAGS := -Wall -Werror -Wextra -g3
-INCFLAGS := $(addprefix -iquote , $(INC_PATH))
+INCFLAGS := $(addprefix -iquote , $(INC_PATH)) $(addprefix -isystem, $(LIB)/include)
 
 
 # Commands
@@ -47,7 +51,10 @@ OBJ_DIRS := $(sort $(dir $(OBJ)))
 
 
 # Rules
-all: $(NAME)
+all: $(LIB) $(NAME)
+
+$(LIB): $(addsuffix .zip, $(LIB))
+	unzip $< -d $(LIB_PATH) > $(LIB_PATH)/unzip.log
 
 $(NAME): $(OBJ_DIRS) $(OBJ)
 	$(CC) -o $@ $(OBJ)
@@ -71,6 +78,10 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+
+lclean: fclean
+	$(RMDIR) $(addsuffix /**/*, $(LIB))
+	$(RMDIR) $(LIB)
 
 re: fclean all
 
