@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/03 10:02:52 by jhache            #+#    #+#              #
-#    Updated: 2021/06/12 13:11:44 by jhache           ###   ########.fr        #
+#    Updated: 2021/06/12 16:03:39 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ OBJ_DIRS := $(sort $(dir $(OBJ)))
 all: $(LIB) $(NAME)
 
 $(LIBSDL): $(LIBSDL_PATH).zip
-	unzip -f $< -d $(LIB_PATH) > $(LIB_PATH)/unzip.log
+	unzip -n $< -d $(LIB_PATH) > $(LIB_PATH)/unzip.log
 	cd $(LIBSDL_PATH) && ./configure --prefix $(CURDIR)/$(LIBSDL_PATH)
 	make -C $(LIBSDL_PATH)
 	make -C $(LIBSDL_PATH) install
