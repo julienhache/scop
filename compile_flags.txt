@@ -1,6 +1,7 @@
 -Wall
 -Werror
 -Wextra
+-I
 library/SDL2-2.0.14/include/SDL2
 -D_REENTRANT
 -iquote

@@ -3,3 +3,5 @@ Language:        Cpp
 BasedOnStyle:  google
 IndentWidth: 4
 AccessModifierOffset: -4
+AlignConsecutiveDeclarations: true
+AlignConsecutiveMacros: true
