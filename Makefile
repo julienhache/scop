@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/03 10:02:52 by jhache            #+#    #+#              #
-#    Updated: 2021/01/31 01:36:19 by jhache           ###   ########.fr        #
+#    Updated: 2021/06/12 13:11:44 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBSDL := $(LIBSDL_PATH)/lib/lib$(LIBSDL_NAME).a
 LIB := $(LIBSDL)
 
 # Compiler
-CC := gcc
+CC := clang
 CCFLAGS := -Wall -Werror -Wextra -g3 `$(LIBSDL_PATH)/sdl2-config --cflags`
 LDFLAGS := `$(LIBSDL_PATH)/sdl2-config --libs`
 INCFLAGS := $(addprefix -iquote , $(INC_PATH))
@@ -82,11 +82,9 @@ clean:
 	$(RM) $(OBJ)
 	$(RMDIR) $(OBJ_DIRS)
 	$(RM) $(DEP_FILES)
-	@make -C $(LIBFT_PATH) clean > /dev/null ||:
 
 fclean: clean
 	$(RM) $(NAME)
-	@make -C $(LIBFT_PATH) fclean > /dev/null ||:
 
 lclean: fclean
 	$(RMDIR) $(LIB)
