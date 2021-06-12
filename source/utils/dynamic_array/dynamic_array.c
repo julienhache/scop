@@ -6,76 +6,71 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 13:22:36 by jhache            #+#    #+#             */
-/*   Updated: 2020/07/03 16:23:09 by jhache           ###   ########.fr       */
+/*   Updated: 2021/06/12 20:21:04 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dynamic_array.h"
 
-#include <stddef.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-static size_t	remaining_size(t_darray *arr)
-{
-	return (arr->capacity - arr->size);
+static size_t _RemainingSize(DynamicArray *arr) {
+    return (arr->capacity - arr->size);
 }
 
-static bool		extend(t_darray *arr, size_t size)
-{
-	void		*tmp;
-	bool		res;
+static bool _Extend(DynamicArray *arr, size_t size) {
+    void *const tmp = realloc(arr->data, arr->capacity + size);
+    const bool  res = (tmp != NULL);
 
-	tmp = realloc(arr->data, arr->capacity + size);
-	res = (tmp != NULL);
-	if (res)
-	{
-		arr->data = tmp;
-		arr->capacity += size;
-	}
-	return (res);
+    if (res) {
+        arr->data = tmp;
+        arr->capacity += size;
+    }
+    return res;
 }
 
-bool			init_darray(t_darray *arr, size_t size)
-{
-	if (size < DARRAY_MIN_SIZE)
-		size = DARRAY_MIN_SIZE;
-	arr->data = malloc(size);
-	if (arr->data == NULL)
-		return (false);
-	arr->capacity = size;
-	arr->size = 0;
-	return (true);
+bool DArrayInit(DynamicArray *arr, size_t size) {
+    if (size < DARRAY_MIN_SIZE) {
+        size = DARRAY_MIN_SIZE;
+    }
+    arr->data = malloc(size);
+    if (arr->data == NULL) {
+        return false;
+    }
+    arr->capacity = size;
+    arr->size = 0;
+    return true;
 }
 
-t_darray		create_darray(void)
-{
-	t_darray	res;
+DynamicArray DArrayCreate(void) {
+    DynamicArray res;
 
-	init_darray(&res, DARRAY_MIN_SIZE);
-	return (res);
+    DArrayInit(&res, DARRAY_MIN_SIZE);
+    return res;
 }
 
-void			del_darray(t_darray *arr)
-{
+// clang-format off
+void DArrayDelete(DynamicArray *arr) {
 	free(arr->data);
 }
+// clang-format on
 
-/* may call extend() if necessary (it will double the capacity) */
-bool			append(t_darray *arr, void *data, size_t size)
-{
-	size_t		new_size;
+/* may call _Extend() if necessary (it will double the capacity) */
+bool DArrayAppend(DynamicArray *arr, void *data, size_t size) {
+    const size_t new_size = arr->size + size;
 
-	new_size = arr->size + size;
-	if (new_size < arr->size)
-		return (false);
-	while (remaining_size(arr) < size)
-	{
-		if (!extend(arr, arr->capacity))
-			return (false);
-	}
-	memcpy(arr->data + arr->size, data, size);
-	arr->size = new_size;
-	return (true);
+    if (new_size < arr->size) {
+        return false;
+    }
+    while (_RemainingSize(arr) < size) {
+        if (!_Extend(arr, arr->capacity)) {
+            return false;
+        }
+    }
+    memcpy(arr->data + arr->size, data, size);
+    arr->size = new_size;
+    return true;
 }

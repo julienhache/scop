@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/03 10:02:52 by jhache            #+#    #+#              #
-#    Updated: 2021/06/12 16:03:39 by jhache           ###   ########.fr        #
+#    Updated: 2021/06/12 19:41:55 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,8 @@ SRC_NAME := main.c
 SRC_NAME += utils/dynamic_array/dynamic_array.c
 SRC_NAME += utils/get_line/get_line.c
 SRC_NAME += obj_parser/obj_parser.c
-SRC_NAME += obj_parser/parsing/parsing1.c \
-			obj_parser/parsing/parsing2.c \
-			obj_parser/parsing/parsing3.c
-SRC_NAME += obj_parser/lexing/lexing1.c
+SRC_NAME += obj_parser/parsing/parsing.c
+SRC_NAME += obj_parser/lexing/lexing.c
 
 SRC :=	$(addprefix $(SRC_PATH)/, $(SRC_NAME))
 OBJ :=	$(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))

@@ -6,73 +6,63 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:08:19 by jhache            #+#    #+#             */
-/*   Updated: 2021/01/29 22:15:44 by jhache           ###   ########.fr       */
+/*   Updated: 2021/06/12 20:14:22 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// Defines how to parse and store .obj file data.
+
 #ifndef OBJ_PARSER_OBJ_PARSER_H
-# define OBJ_PARSER_OBJ_PARSER_H
+#define OBJ_PARSER_OBJ_PARSER_H
 
-# include "utils/dynamic_array/dynamic_array.h"
-# include "utils/get_line/get_line.h"
+#include "utils/dynamic_array/dynamic_array.h"
+#include "utils/get_line/get_line.h"
 
-/*
-** Vertex data
-**
-** The integral value of each identifier are used
-** as array index for the t_obj_file's darrays.
-*/
-typedef enum	e_obj_data_type
-{
-	/* geometric vertices */
-	OBJ_V = 0,
-	/* texture vertices */
-	OBJ_VT,
-	/* vertex normals */
-	OBJ_VN,
-	/* parameter space vertices (free-form curve/surface attributes) (unused) */
-/*	OBJ_VP, */
-	/* faces (as groups of vertices) */
-	OBJ_F,
-	/* Error handling */
-	OBJ_NONE,
-	OBJ_ERROR
-}				t_obj_data_type;
+// Identifies the type of data in a .obj file.
+// Each identifier's value is used as an array index for the ObjFile's darrays.
+typedef enum ObjDataType {
+    // geometric vertices
+    OBJ_V = 0,
+    // texture vertices
+    OBJ_VT,
+    // vertex normals
+    OBJ_VN,
+    // parameter space vertices (free-form curve/surface attributes)
+    // OBJ_VP, (unused)
+    // faces (as groups of vertices)
+    OBJ_F,
+    // Error handling
+    OBJ_NONE,
+    OBJ_ERROR
+} ObjDataType;
 
-# define OBJ_DATA_TYPE_NB		4
-# define OBJ_DATA_TYPE_FLAGS_NB	6
+// TODO(jhache): use ObjDataType flags to automatically update these macros
+#define OBJ_DATA_TYPE_NB       4
+#define OBJ_DATA_TYPE_FLAGS_NB 6
 
-/*
-** t_obj_file is a struct that will contain all the data of a .obj file.
-** An instance of t_obj_file shall be allocated and return only by the
-** parse_file() function.
-** To deallocate a t_obj_file instance provided by the parse_file() func,
-** you must call destroy_obj_file(), then free() the instance's memory.
-*/
-typedef struct		s_obj_file
-{
-	const char	*filename;
-	t_gl_data	filedata;
-	t_darray	v;
-	t_darray	vt;
-	t_darray	vn;
-	t_darray	f;
-}					t_obj_file;
+// Stores a .obj file data.
+// You should use the ParseFile() and DestroyObjFile() functions
+// to retrieve / destroy your instance. Dont forget to call free()
+// on ParseFile()'s returned value.
+typedef struct ObjFile {
+    const char * filename;
+    GLData       filedata;
+    DynamicArray v;
+    DynamicArray vt;
+    DynamicArray vn;
+    DynamicArray f;
+} ObjFile;
 
-/*
-** NUMBER_OF_DARRAY is used to loop on all darrays of a t_obj_file instance.
-** This way, you can easily reach any (or each) data.
-** A common way to achieve this is:
-** 	{
-** 		t_darray * const	darray = &data->v;// the first element
-**      size_t				darr_i = 0;
-** 		[...]
-** 		while (darr_i++ < NUMBER_OF_DARRAY) {[use darray[darr_i] element...]}
-** 	}
-*/
-# define NUMBER_OF_DARRAY	OBJ_DATA_TYPE_NB
+// Provides a pointer interface for all darrays of a ObjFile instance.
+// Example:
+//  while (i++ < NUMBER_OF_DARRAY) {
+//      [use 'GET_DARRAYS(obj_file)[i]' element...]
+#define GET_DARRAYS(obj_file) (&obj_file->v)
+#define NUMBER_OF_DARRAY      OBJ_DATA_TYPE_NB
 
-t_obj_file		*parse_file(const char *filename);
-void			destroy_obj_file(t_obj_file *data);
+// Parses a 'filename'.obj file. Return an allocated ObjFile instance,
+// or NULL if an error occurs.
+ObjFile *ParseFile(const char *filename);
+void     DestroyObjFile(ObjFile *data);
 
 #endif

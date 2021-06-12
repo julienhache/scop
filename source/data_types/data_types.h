@@ -6,59 +6,54 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 15:11:47 by jhache            #+#    #+#             */
-/*   Updated: 2021/01/29 22:14:54 by jhache           ###   ########.fr       */
+/*   Updated: 2021/06/12 20:31:00 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJ_PARSER_DATA_TYPES_DATA_TYPES_H
-# define OBJ_PARSER_DATA_TYPES_DATA_TYPES_H
+#define OBJ_PARSER_DATA_TYPES_DATA_TYPES_H
 
 #include <limits.h>
 
-/* basic definitions */
+// basic definitions
 
-# define OBJ_FLOAT		float
-# define OBJ_INTEGER	int
+#define OBJ_FLOAT   float
+#define OBJ_INTEGER int
 
-typedef struct	s_4d_float
-{
-	OBJ_FLOAT	x;
-	OBJ_FLOAT	y;
-	OBJ_FLOAT	z;
-	OBJ_FLOAT	w;
-}				t_4df;
+typedef struct Float4D {
+    OBJ_FLOAT x;
+    OBJ_FLOAT y;
+    OBJ_FLOAT z;
+    OBJ_FLOAT w;
+} Float4D;
 
-typedef struct	s_3d_float
-{
-	OBJ_FLOAT	x;
-	OBJ_FLOAT	y;
-	OBJ_FLOAT	z;
-}				t_3df;
+typedef struct Float3D {
+    OBJ_FLOAT x;
+    OBJ_FLOAT y;
+    OBJ_FLOAT z;
+} Float3D;
 
-typedef struct	s_2d_float
-{
-	OBJ_FLOAT	x;
-	OBJ_FLOAT	y;
-}				t_2df;
+typedef struct Float2D {
+    OBJ_FLOAT x;
+    OBJ_FLOAT y;
+} Float2D;
 
-typedef struct s_3d_integer
-{
-	OBJ_INTEGER	x;
-	OBJ_INTEGER	y;
-	OBJ_INTEGER	z;
-}				t_3di;
+typedef struct Int3D {
+    OBJ_INTEGER x;
+    OBJ_INTEGER y;
+    OBJ_INTEGER z;
+} Int3D;
 
-/* .obj file data types */
+// .obj file data types
 
-typedef t_4df	t_vertex;
-typedef t_3df	t_vtexture;
-typedef t_3df	t_vnormal;
+typedef Float4D t_vertex;
+typedef Float3D t_vtexture;
+typedef Float3D t_vnormal;
 
-# define MAX_VERTICES_PER_FACE	4
+#define MAX_VERTICES_PER_FACE 4
 
-typedef struct	s_face
-{
-	t_3di		vertices[MAX_VERTICES_PER_FACE];			
-}				t_face;
+typedef struct s_face {
+    Int3D vertices[MAX_VERTICES_PER_FACE];
+} t_face;
 
 #endif

@@ -1,5 +1,5 @@
 ---
-Checks:          'clang-diagnostic-*,clang-analyzer-*,google-*,cppcoreguidelines-*'
+Checks:          'clang-diagnostic-*,clang-analyzer-*,google-*,cppcoreguidelines-*,-cppcoreguidelines-narrowing-conversions'
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false
